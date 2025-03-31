@@ -68,7 +68,7 @@ function Input({ socket }) {
             image,
         }
     
-        const res = await fetch(`https://hawky.onrender.com/api/message`, {
+        const res = await fetch(`http://localhost:5000/api/message`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -140,7 +140,7 @@ function Input({ socket }) {
                     image: ""
                 };
         
-                const res = await fetch(`https://hawky.onrender.com/api/message`, {
+                const res = await fetch(`http://localhost:5000/api/message`, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",

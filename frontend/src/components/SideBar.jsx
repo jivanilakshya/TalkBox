@@ -53,7 +53,7 @@ function SideBar() {
     } , []);
 
     const deleteAccount = async () => {
-        const res = await fetch(`https://hawky.onrender.com/api/user/delete/` + currentUser.id, {
+        const res = await fetch(`http://localhost:5000/api/user/delete/` + currentUser.id, {
             method: "DELETE"
         });
 
@@ -69,7 +69,7 @@ function SideBar() {
 
     useEffect(() => {
         const getFriends = async () => {
-          const res = await fetch(`https://hawky.onrender.com/api/friend`, {
+          const res = await fetch(`http://localhost:5000/api/friend`, {
             headers: {
               "Authorization": `Bearer ${currentUser.token}`
             }
