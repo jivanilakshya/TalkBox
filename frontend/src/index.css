@@ -1,27 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-body {
-    @apply bg-primary text-white;
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+@layer base {
+    body {
+        @apply bg-primary text-white font-sans;
+    }
 }
 
-.custom-height {
-    height: calc(100% - 96px);
-}
+@layer components {
+    .custom-height {
+        height: calc(100% - 96px);
+    }
 
-.owner {
-    @apply rounded-tl-lg flex justify-end;
-}
+    .owner {
+        @apply rounded-tl-lg flex justify-end;
+    }
 
-.not-owner {
-    @apply rounded-tr-lg;
-}
+    .not-owner {
+        @apply rounded-tr-lg;
+    }
 
-.fill {
-    animation: drop 1s;
-    box-shadow: 0 0 10px 1000px rgba(0, 0, 0, 0.6);
+    .fill {
+        animation: drop 1s;
+        box-shadow: 0 0 10px 1000px rgba(0, 0, 0, .6);
+    }
 }
 
 @keyframes drop {
