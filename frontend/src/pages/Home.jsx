@@ -16,7 +16,7 @@ function Home() {
     const { user } = state;
 
     useEffect(() => {
-        socket.current = io("http://localhost:5000");
+        socket.current = io("https://hawky.onrender.com");
         socket.current.emit("add-new-user", user?.id);
         socket.current.on("get-online-users", (activeUsers) => {
             setOnlineUser(activeUsers);

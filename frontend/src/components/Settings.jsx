@@ -26,7 +26,7 @@ function Settings({ onClose }) {
         setSuccess("");
 
         try {
-            const res = await fetch(`http://localhost:5000/api/user/update`, {
+            const res = await fetch(`https://hawky.onrender.com/api/user/update`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",

@@ -1,12 +1,19 @@
 const express = require("express");
+const mongoose = require("mongoose");
+const dotenv = require("dotenv");
 const cors = require("cors");
 const { Server } = require("socket.io");
 const http = require("http");
-const connectDB = require("./database/db");
 
 const userRoute = require("./routes/userRoute");
 const userFriendRoute = require("./routes/userFriendRoute");
 const messageRoute = require("./routes/messageRoute");
+
+// Load environment variables
+dotenv.config();
+
+// Set mongoose strictQuery option
+mongoose.set('strictQuery', false);
 
 class Connection {
     constructor() {
@@ -67,27 +74,29 @@ class Connection {
 
     listen() {
         this.http.listen(process.env.PORT, () => {
-            console.log(`Server started on http://localhost:${process.env.PORT}`);
+            console.log("Server started on port", process.env.PORT);
         });
     }
 
-    async start() {
+    async connectToDB() {
         try {
-            // Connect to database
-            await connectDB();
-            
-            // Initialize server
-            this.useMiddleWares();
-            this.initializeRoutes();
-            this.initSocketConnection();
-            this.test();
+            if (!process.env.MONGO_URI) {
+                throw new Error("MongoDB URI is not defined in environment variables");
+            }
+            await mongoose.connect(process.env.MONGO_URI);
+            console.log("Connected to MongoDB successfully");
             this.listen();
         } catch (error) {
-            console.error("Error starting server:", error.message);
+            console.error("Error connecting to MongoDB:", error.message);
             process.exit(1);
         }
     }
 }
 
 const server = new Connection();
-server.start();
+
+server.useMiddleWares();
+server.initializeRoutes();
+server.initSocketConnection();
+server.test();
+server.connectToDB();
