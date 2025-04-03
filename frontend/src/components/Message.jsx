@@ -23,7 +23,7 @@ function Message({ setFriend, friend, toggleShow }) {
         e.preventDefault();
         setText("");
 
-        const res = await fetch(`https://hawky.onrender.com/api/user/` + text);
+        const res = await fetch(`http://localhost:5000/api/user/` + text);
         const json = await res.json();
 
         if (!res.ok) {
@@ -48,7 +48,7 @@ function Message({ setFriend, friend, toggleShow }) {
             friendImage: friend.displayPicture
         }
 
-        const res = await fetch(`https://hawky.onrender.com/api/friend/addFriend`, {
+        const res = await fetch(`http://localhost:5000/api/friend/addFriend`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -80,7 +80,7 @@ function Message({ setFriend, friend, toggleShow }) {
     }
 
     return (
-        <div className='mobile:px-3 px-5 bg-secondary h-[500px] overflow-auto'>
+        <div className='mobile:px-3 px-5 bg-secondary h-[525px] overflow-auto'>
             <div className='sticky top-0 bg-secondary'>
                 
                 <div className='mb-6 sticky mt-1 flex justify-between items-center'>

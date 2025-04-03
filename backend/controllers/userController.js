@@ -2,18 +2,58 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/userModel");
 
 function createToken(_id) {
-    return jwt.sign({_id}, process.env.SECRET, {expiresIn: "3d"});
+    return jwt.sign({_id}, process.env.JWT_SECRET, {expiresIn: "3d"});
 }
 
 async function signUp(req, res) {
     const { email, password, userName, displayPicture } = req.body;
 
     try {
-        const user = await User.signup(email, password, userName, displayPicture);
+        console.log('Signup attempt:', { email, userName });
+        
+        // Validate input
+        if (!email || !password || !userName) {
+            console.log('Missing required fields');
+            return res.status(400).json({ error: "All fields are required" });
+        }
+
+        // Check password length
+        if (password.length < 6) {
+            console.log('Password too short');
+            return res.status(400).json({ error: "Password must be greater than six characters" });
+        }
+
+        // Check if user exists
+        const existingUser = await User.findOne({ $or: [{ email }, { userName }] });
+        if (existingUser) {
+            console.log('User already exists:', existingUser);
+            return res.status(400).json({ 
+                error: existingUser.email === email ? "Email already in use" : "Username already in use" 
+            });
+        }
+
+        // Create user
+        console.log('Creating new user...');
+        const user = await User.create({
+            email,
+            password,
+            userName,
+            displayPicture
+        });
+        
+        console.log('User created successfully:', user);
         const token = createToken(user._id);
-        res.status(200).json({ id: user._id, displayPicture, token, email, password, userName});
+        
+        res.status(200).json({ 
+            id: user._id, 
+            displayPicture, 
+            token, 
+            email, 
+            userName
+        });
     } catch (error) {
-        res.status(400).json({error: error.message});
+        console.error('Signup error:', error);
+        res.status(400).json({ error: error.message });
     }
 }
 

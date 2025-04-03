@@ -28,7 +28,7 @@ function Login() {
         e.preventDefault();
         setLoading(true);
 
-        const res = await fetch(`https://hawky.onrender.com/api/user/login`, {
+        const res = await fetch(`http://localhost:5000/api/user/login`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

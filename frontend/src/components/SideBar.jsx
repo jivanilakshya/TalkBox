@@ -53,7 +53,7 @@ function SideBar() {
     } , []);
 
     const deleteAccount = async () => {
-        const res = await fetch(`https://hawky.onrender.com/api/user/delete/` + currentUser.id, {
+        const res = await fetch(`http://localhost:5000/api/user/delete/` + currentUser.id, {
             method: "DELETE"
         });
 
@@ -69,23 +69,34 @@ function SideBar() {
 
     useEffect(() => {
         const getFriends = async () => {
-          const res = await fetch(`https://hawky.onrender.com/api/friend`, {
-            headers: {
-              "Authorization": `Bearer ${currentUser.token}`
+          try {
+            const res = await fetch(`http://localhost:5000/api/friend`, {
+              method: 'GET',
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${currentUser.token}`
+              }
+            });
+            
+            const json = await res.json();
+  
+            if (!res.ok) {
+              console.error('Error fetching friends:', json.error);
+              return;
             }
-          });
-          const json = await res.json();
   
-          if (!res.ok) {
-            console.log(json.error);
-          }
-  
-          if (res.ok) {
-            friendDispatch({type: "FETCH", payload: json});
+            if (res.ok) {
+              friendDispatch({type: "FETCH", payload: json});
+            }
+          } catch (error) {
+            console.error('Error in getFriends:', error);
           }
         }
-        getFriends();
-    }, []);
+        
+        if (currentUser && currentUser.token) {
+          getFriends();
+        }
+    }, [currentUser]);
 
     const toggleShow = () => {
         if (side.current.classList.contains("mobile:invisible")) {
@@ -97,7 +108,7 @@ function SideBar() {
 
     return (
         <div className='flex items-start justify-center'>
-            <div ref={side} className='bg-[#3e3c61] p-5 w-fit h-[500px] rounded-bl-lg rounded-tl-lg mobile:invisible mobile:absolute z-40 mobile:right-[50%]'>
+            <div ref={side} className='bg-[#3e3c61] p-5 w-fit h-[525px] rounded-bl-lg rounded-tl-lg mobile:invisible mobile:absolute z-40 mobile:right-[50%]'>
                 <div className='flex items-center gap-1'>
                     <img className='w-10 rounded-full object-cover' src={isEmpty ? avatar : currentUser.displayPicture} alt="" />
                     <p>{ currentUser.userName }</p>
