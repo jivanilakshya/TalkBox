@@ -7,7 +7,7 @@ function NavBar() {
         <div className='flex justify-around items-center py-6 bg-navbg sticky top-0'>
             <Link to="/" className='flex gap-2 items-center'>
                 <img className='w-8 rounded-full object-cover' src={logo} alt="logo" />
-                <h2 className='text-2xl font-heading'>Hawky</h2>
+                <h2 className='text-2xl font-heading'>TalkBox</h2>
             </Link>
 
             <div className='flex items-center gap-6'>
