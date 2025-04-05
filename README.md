@@ -1,4 +1,4 @@
-# Chat Box ✨💬🚀
+# TalkBox ✨💬🚀
 
 A simple chat box application built using modern web technologies. 🛠️💻📡
 
