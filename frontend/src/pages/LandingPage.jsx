@@ -1,61 +1,29 @@
-import React, { useRef, useState } from 'react';
-import { Link } from "react-router-dom";
-import NavBar from '../components/NavBar';
-import videochat from "../assets/video-chat.jpg";
-import groupchat from "../assets/groupchat.jpg";
+import React from 'react';
+import { Link } from 'react-router-dom';
 import chat from "../assets/chat.jpg";
-import audiochat from "../assets/audiochat.jpg";
-import Loading from '../components/Loading';
+import NavBar from '../components/NavBar';
+import Div from '../components/Div';
 
-const Div = ({headingText, text, img}) => {
-    const imgRef = useRef(null);
-    const [isLoaded, setIsLoaded] = useState(false);
-
-    const handleLoad = () => {
-        setIsLoaded(imgRef.current.complete);
-    }
-
+function LandingPage() {
     return (
-        <div className='flex items-center flex-wrap justify-around mb-20 even:flex-row-reverse'>
-            {
-                !isLoaded && <Loading />
-            }
-            <img onLoad={handleLoad} ref={imgRef} loading='lazy' 
-                className={`${isLoaded ? "sm:w-[300px] w-72" : "w-0" } rounded-md`} src={img} alt="chat" />
-            <div className='flex flex-col gap-6'>
-                <h2 className='font-heading text-2xl text-center sm:text-3xl sm:text-start'>{ headingText }</h2>
-                <p className='sm:text-lg sm:text-start text-base text-center'>{ text }</p>
-            </div>
-        </div>
-    )
-}
-
-const LandingPage = () => {
-    return (
-        <div>
+        <div className='min-h-screen bg-[#2f2d52]'>
             <NavBar />
-
-            <div className='mt-20'>
-                <Div img={chat} headingText="Instant Realtime messaging." 
-                text='Sending message in realtime to loved ones and friends from all over the world.' />
-                <Div img={groupchat} headingText="Integrated Group chat" 
-                text='Creating a group chat for any purporse.' />
-                <Div img={videochat} headingText="Video call system." 
-                text='Video calling is also available for communication for all users.' />
-                <Div img={audiochat} headingText="Audio call system." 
-                text='The Video calling system not for you? Audio calling is available for you as an alternative.' />
-            </div>
-
-            <div className='flex justify-center items-center mb-8'>
-                <button className='bg-register text-gray-600 px-4 py-2 rounded-lg font-bold drop-shadow-2xl active:scale-75 duration-300'>
-                    <Link to="/register">Get started</Link>
-                </button>
-            </div>
-
-            <div className='w-3/4 m-auto h-[2px] bg-white'></div>
-
-            <div className='flex justify-center items-center my-10 text-base text-center sm:text-lg'>
-                <p>Copyright &copy; Ghasty, 2023. All rights reserved. </p>
+            <div className='flex flex-col items-center justify-center gap-10 p-10'>
+                <h1 className='text-4xl font-bold text-center text-white'>Welcome to TalkBox</h1>
+                <p className='text-xl text-center text-gray-300'>A real-time chat application for seamless communication</p>
+                
+                <Div img={chat} headingText="Real-time messaging."
+                    text='Send and receive messages instantly with our real-time chat system.' />
+                
+                <Div headingText="User-friendly interface."
+                    text='Simple and intuitive design for easy communication.' />
+                
+                <Div headingText="Secure communication."
+                    text='Your messages are encrypted and secure.' />
+                
+                <Link to="/login" className='px-6 py-3 text-lg font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors'>
+                    Get Started
+                </Link>
             </div>
         </div>
     );

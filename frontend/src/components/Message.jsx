@@ -92,7 +92,7 @@ function Message({ setFriend, friend, toggleShow }) {
                     <p className='ml-1'>Find a User</p>
 
                     <div onClick={handleAddFriend} className='flex items-center gap-1 my-2 cursor-pointer'>
-                        <img className='w-10 rounded-full object-cover' src={isFriendPictureEmpty ? avatar : friend?.displayPicture} alt="" />
+                       <img className='w-10 rounded-full object-cover' src={isFriendPictureEmpty ? avatar : friend?.displayPicture} alt="" />
                         <p>{ friend?.userName }</p>
                     </div>
 
