@@ -10,7 +10,7 @@ const Div = ({ headingText, text, img }) => {
     }
 
     return (
-        <div className='flex items-center flex-wrap justify-around mb-20 even:flex-row-reverse'>
+        <div className='flex items-center flex-wrap justify-around mb-20 even:flex-row-reverse gap-20'>
             {!isLoaded && <Loading />}
             {img && (
                 <img 
