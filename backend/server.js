@@ -46,6 +46,8 @@ class Connection {
 
     initSocketConnection() {
         this.io.on("connection", (socket) => {
+            console.log("New client connected:", socket.id);
+            
             socket.on("add-new-user", (userId) => {
                 if (!this.activeUsers.find(user => user.userId === userId) && userId) {
                     this.activeUsers.push({
@@ -68,13 +70,15 @@ class Connection {
             socket.on("disconnect", () => {
                 this.activeUsers = this.activeUsers.filter(user => user.socketId !== socket.id);
                 this.io.emit("get-online-users", this.activeUsers);
+                console.log("Client disconnected:", socket.id);
             })
         })
     }
 
     listen() {
-        this.http.listen(process.env.PORT, () => {
-            console.log("Server started on port", process.env.PORT);
+        const port = process.env.PORT || 5000;
+        this.http.listen(port, () => {
+            console.log(`Server started on port ${port}`);
         });
     }
 
@@ -83,6 +87,7 @@ class Connection {
             if (!process.env.MONGO_URI) {
                 throw new Error("MongoDB URI is not defined in environment variables");
             }
+            console.log("Attempting to connect to MongoDB...");
             await mongoose.connect(process.env.MONGO_URI);
             console.log("Connected to MongoDB successfully");
             this.listen();
@@ -95,8 +100,14 @@ class Connection {
 
 const server = new Connection();
 
-server.useMiddleWares();
-server.initializeRoutes();
-server.initSocketConnection();
-server.test();
-server.connectToDB();
+// Initialize the server
+try {
+    server.useMiddleWares();
+    server.initializeRoutes();
+    server.initSocketConnection();
+    server.test();
+    server.connectToDB();
+} catch (error) {
+    console.error("Error initializing server:", error);
+    process.exit(1);
+}
