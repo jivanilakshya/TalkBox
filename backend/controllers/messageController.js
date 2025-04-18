@@ -14,11 +14,6 @@ async function addMessage(req, res) {
 async function getMessages(req, res) {
     const { senderId, receiverId } = req.params;
 
-    /*
-    @params
-    const page = (req.query.chats || 0) as number;
-    const chatsPerFetch = 10; */
-
     try {
         const chats = await Message.find({
             $and: [

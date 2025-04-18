@@ -5,6 +5,9 @@ const cors = require("cors");
 const { Server } = require("socket.io");
 const http = require("http");
 
+// Suppress punycode deprecation warning
+process.removeAllListeners('warning');
+
 const userRoute = require("./routes/userRoute");
 const userFriendRoute = require("./routes/userFriendRoute");
 const messageRoute = require("./routes/messageRoute");
